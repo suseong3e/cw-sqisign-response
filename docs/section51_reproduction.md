@@ -57,30 +57,7 @@ python3 section51_reproduce.py --bundle path/to/bundle --out path/to/report.json
 검증하고 `verified_precomputed`로 기록한다. 번들이 그림을 선언하지 않으면 새 그림을
 추측해 생성하지 않고 `not_generated`로 기록한다.
 
-## 역사적 실험 기록
-
-`section51-experiment-record-v1.tar.gz`는 분석 당시의 자료를 시점별로 보존한
-추가 Release 자산이다. `analysis-input/`에는 공개 스케줄과 원시 파형 자산의
-정확한 이름·SHA-256 참조가, `frozen-results/`에는 M·CRT 경로의 스크립트와
-동결 결과가, `posthoc-truth/`에는 held-out 감사·KAT·CRT 비공개 스케줄이 있다.
-KAT와 비공개 스케줄은 후보 동결 전에 분석기에 제공된 입력이 아니다.
-
-아카이브 자체는 다음처럼 검증한다.
-
-```bash
-sha256sum -c artifact/section51-release.sha256
-python3 section51_record.py --verify section51-experiment-record-v1.tar.gz
-```
-
-아카이브의 manifest는 각 멤버 해시와 원본의 저장소 상대 경로를 결속한다. raw
-trace는 기존 `section51-matrix-v1.tar.zst`와 `section51-crt-v1.tar.zst`를 받는다.
-장비 식별자, 벤더·소스 아카이브, 원시 trace 배열은 이 기록에 넣지 않았다.
-
-이 아카이브는 **역사적 실험 기록**이며 단독 실행기는 아니다. 이후 세션 기록에서
-논문 당시 분석 소스를 SHA-256 일치 상태로 복구했고, 경로 메타데이터를 분리한
-canonical 실행 경로를 `section51_paper_v1/source/`에 추가했다.
-
-## 원시 파형부터 전체 재실행
+## 공개 재현 자산 검증
 
 Python 3.12와 Linux x86-64 환경이 필요하다. 포함된 challenge oracle이 동적 링크된
 x86-64 ELF이므로 다른 운영체제·아키텍처 재현은 현재 주장하지 않는다.
@@ -91,26 +68,21 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 
 gh release download section51-full-replay-v1 \
+  --pattern section51-full-replay-v1.tar.zst \
   --pattern section51-matrix-v1.tar.zst \
   --pattern section51-crt-v1.tar.zst \
-  --pattern section51-experiment-record-v1.tar.gz \
+  --pattern section51-validation-v1.tar.zst \
   --dir section51-download
 
-mkdir -p section51-data section51-record
+mkdir -p section51-data section51-validation section51-run005
 tar --zstd -xf section51-download/section51-matrix-v1.tar.zst -C section51-data
 tar --zstd -xf section51-download/section51-crt-v1.tar.zst -C section51-data
-tar -xzf section51-download/section51-experiment-record-v1.tar.gz -C section51-record
-
-python section51_full_replay.py \
-  --m-data section51-data/matrix \
-  --crt-data section51-data/crt \
-  --kat section51-record/posthoc-truth/trial-0002/fresh_key.rsp \
-  --out section51-replay
+tar --zstd -xf section51-download/section51-validation-v1.tar.zst -C section51-validation
+tar --zstd -xf section51-download/section51-full-replay-v1.tar.zst -C section51-run005
+(cd section51-download && sha256sum -c ../artifact/section51-full-replay-release.sha256 --ignore-missing)
 ```
 
-실행기는 기존 출력 디렉터리를 거부한다. 후보 생성에는 파형과 공개 schedule만 쓰며,
-`candidate_commitment.json`을 기록한 뒤에만 held-out 감사와 실험용 KAT을 실행한다.
-성공하면 `replay_result.json`의 상태가 `accepted`이고 Figure PDF/PNG가 생성된다.
+`section51-full-replay-v1.tar.zst`에는 clean run005의 명령 기록, 후보 동결, held-out 감사, 결과 JSON과 Figure PDF/PNG가 들어 있다. KAT과 비공개 스케줄은 공개 Release에 포함하지 않는다.
 
 clean run005는 처음부터 끝까지 종료 코드 0으로 다음 결과를 만들었다.
 
