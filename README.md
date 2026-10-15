@@ -15,9 +15,10 @@ SQIsign Round-3의 행렬 연산을 대상으로 한 CPA 후보 순위화와 적
 못한 경우는 **부분성공**이다. 후보 수, 축소 범위, 검증 결과와 사후 KAT 포함
 여부를 각각 기록해야 한다.
 
-기본 코드만으로는 측정 결과를 주장하지 않는다. Section 5.1 Release의 검증 번들은
-후보 동결 뒤 저장된 held-out 수치와 Figure의 해시·계약을 확인한다. 원시 파형도
-제공하지만 현재 명령은 전체 공격을 재계산하지 않으며 새 키 일반화를 뜻하지 않는다.
+Section 5.1 Release는 원시 파형과 공개 schedule, 처분 가능한 실험용 KAT,
+보존 소스 및 canonical 실행기를 제공한다. `section51_full_replay.py`는 새 출력
+디렉터리에서 후보 생성부터 held-out 감사, 사후 KAT, Figure 2까지 다시 계산한다.
+이는 한 키의 `isolated_primitive` artifact replay이며 새 키 일반화를 뜻하지 않는다.
 
 ## 구성
 
@@ -26,6 +27,8 @@ SQIsign Round-3의 행렬 연산을 대상으로 한 CPA 후보 순위화와 적
 - `r3_inert_ideal_probe/`: 규칙이 사용하는 누설 모델 헬퍼 두 개
 - `test_r3_adaptive_paths.py`: 데이터·하드웨어 비필수 회귀 검사
 - `section51_reproduce.py`: 논문 Section 5.1 스냅샷 무결성·수치 검사
+- `section51_full_replay.py`: 원시 파형부터 Section 5.1 전체 분석 재실행
+- `section51_paper_v1/source/`: 역사 소스와 경로 독립 canonical 소스 스냅샷
 - `docs/section51_reproduction.md`: 데이터와 재현 범위
 
 ## 실행
@@ -41,6 +44,7 @@ python -m py_compile \
   r3_onekey_m_rules/*.py r3_inert_ideal_probe/*.py
 python test_r3_adaptive_paths.py
 python test_section51_reproduce.py
+python test_section51_full_replay.py
 ```
 
 Section 5.1 검증 번들을 받은 뒤에는 다음처럼 실행한다.
@@ -55,9 +59,9 @@ python section51_reproduce.py --bundle section51-bundle --out section51-report.j
 `section51-experiment-record-v1.tar.gz`는 Section 5.1의 공개 입력, M/CRT 후보
 동결 경로, 사후 held-out 감사, 그리고 **처분 가능한 trial-0002 KAT·CRT 비공개
 스케줄**을 시점별로 묶은 역사적 실험 기록이다. 원시 파형은 중복하지 않고 기존
-Release 자산을 해시로 참조한다. 이 기록은 현 저장소에 없는 과거 CRT 분석기
-소스 때문에 실행 가능한 전체 재현이 아니며, 그 한계와 검증 방법은
-`docs/section51_reproduction.md`에 명시한다.
+Release 자산을 해시로 참조한다. 역사 기록 자체는 실행기가 아니며, 전체 재실행은
+복구·보존한 소스와 `section51_full_replay.py`를 사용한다. 다운로드, 압축 해제,
+실행 명령과 run004 편차 기록은 `docs/section51_reproduction.md`에 명시한다.
 
 측정 데이터는 Git 파일 크기 제한 때문에 같은 저장소의 독립 Release 자산으로
 제공한다. 프로젝트 자체 라이선스는 아직 선택하지 않았으므로 명시적 라이선스가
