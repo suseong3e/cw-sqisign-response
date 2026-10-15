@@ -35,7 +35,7 @@ Release 자산을 받은 디렉터리에서 소스 트리의 체크섬 파일로
 sha256sum -c /path/to/repo/artifact/section51-release.sha256
 ```
 
-세 항목이 모두 `OK`일 때만 검증 번들을 푼다. 내부 `manifest.sha256`은 번들 손상
+네 항목이 모두 `OK`일 때만 검증 번들을 푼다. 내부 `manifest.sha256`은 번들 손상
 검사용이며, 외부 신뢰 기준은 커밋된 이 체크섬 파일이다.
 
 
@@ -52,3 +52,28 @@ python3 section51_reproduce.py --bundle path/to/bundle --out path/to/report.json
 검증 번들이 Figure 2 PDF/PNG와 렌더러를 선언하면 세 파일의 manifest 해시를
 검증하고 `verified_precomputed`로 기록한다. 번들이 그림을 선언하지 않으면 새 그림을
 추측해 생성하지 않고 `not_generated`로 기록한다.
+
+## 역사적 실험 기록
+
+`section51-experiment-record-v1.tar.gz`는 분석 당시의 자료를 시점별로 보존한
+추가 Release 자산이다. `analysis-input/`에는 공개 스케줄과 원시 파형 자산의
+정확한 이름·SHA-256 참조가, `frozen-results/`에는 M·CRT 경로의 스크립트와
+동결 결과가, `posthoc-truth/`에는 held-out 감사·KAT·CRT 비공개 스케줄이 있다.
+KAT와 비공개 스케줄은 후보 동결 전에 분석기에 제공된 입력이 아니다.
+
+아카이브 자체는 다음처럼 검증한다.
+
+```bash
+sha256sum -c artifact/section51-release.sha256
+python3 section51_record.py --verify section51-experiment-record-v1.tar.gz
+```
+
+아카이브의 manifest는 각 멤버 해시와 원본의 저장소 상대 경로를 결속한다. raw
+trace는 기존 `section51-matrix-v1.tar.zst`와 `section51-crt-v1.tar.zst`를 받는다.
+장비 식별자, 벤더·소스 아카이브, 원시 trace 배열은 이 기록에 넣지 않았다.
+
+이것은 **역사적 실험 기록**이며 실행 가능한 전체 CPA 재현은 아니다. 특히 대부분의
+CRT 산출물에 결속된 당시 스크립트 SHA-256이 현재 보존된 소스와 다르고, held-out과
+posthoc KAT 분석기의 정확한 당시 소스가 남아 있지 않다. 따라서 저장된 증거의
+해시·연대기·범위를 검사할 수 있으나, 현재 소스로 과거 결과를 다시 계산했다고
+주장해서는 안 된다.

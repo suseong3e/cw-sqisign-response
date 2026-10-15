@@ -23,6 +23,11 @@
       "bytes": 172055,
       "sha256": "ab04b50152bc85a045d7a31f7a3b6ef45b6a3bf3a9bcbd4b6a0a583757b7ac11",
       "contents": "hash-bound heldout audit, Figure 2 PDF/PNG, renderer"
+    },
+    "section51-experiment-record-v1.tar.gz": {
+      "bytes": 606686,
+      "sha256": "a9bba847c266160282795b5946a9d39bc71f7d5e6b712ed4f0cb6bbf8c067cca",
+      "contents": "historical Section 5.1 record: inputs, frozen M/CRT results, posthoc disposable KAT and private CRT schedule; raw traces referenced, not duplicated"
     }
   },
   "evidence_contract": {
