@@ -2,8 +2,8 @@
 
 This repository provides two verification paths. `section51_reproduce.py`
 checks the hashes and numerical values of the published validation snapshot.
-`section51_full_replay.py` is the canonical analysis runner; its post-hoc KAT
-stage requires a separately supplied KAT that is not part of the public release.
+`section51_full_replay.py` is the canonical analysis runner. Its post-hoc stage
+uses the disposable experiment KAT included in the full-replay release asset.
 
 `section51_reproduce.py` verifies the **unblinded snapshot integrity** of the
 held-out audit and Figure 2 after candidate commitment. It does not establish
@@ -94,12 +94,18 @@ tar --zstd -xf section51-download/section51-matrix-v1.tar.zst -C section51-data
 tar --zstd -xf section51-download/section51-crt-v1.tar.zst -C section51-data
 tar --zstd -xf section51-download/section51-validation-v1.tar.zst -C section51-validation
 tar --zstd -xf section51-download/section51-full-replay-v1.tar.zst -C section51-run005
+
+python section51_full_replay.py \
+  --m-data section51-data/matrix \
+  --crt-data section51-data/crt \
+  --kat section51-run005/runs/20261015-section51-paper-v1-replay-005/inputs/disposable-experiment-kat.rsp \
+  --out section51-replay
 ```
 
-`section51-full-replay-v1.tar.zst` contains the clean run005 command log,
-candidate commitment, held-out audit, result JSON files, and Figure 2 in PDF and
-PNG formats. KAT data and private schedules are not included in the public
-release.
+`section51-full-replay-v1.tar.zst` contains the clean run005 candidate
+commitment, held-out audit, result JSON files, Figure 2 in PDF and PNG formats,
+and the disposable experiment KAT. The machine-specific command log and private
+schedules are not included in the public release.
 
 Clean run005 completed from start to finish with exit code 0 and produced:
 

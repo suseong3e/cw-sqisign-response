@@ -19,8 +19,8 @@ candidate count, reduction, validation results, and whether the correct value
 was found by the post-hoc KAT check.
 
 The Section 5.1 release provides the paper, measured traces, public schedules,
-preserved source, and the complete clean run005 results. KAT data and private
-schedules are not included. The claim is limited to a one-key
+the disposable experiment KAT, preserved source, and the complete clean run005
+results. Private schedules are not included. The claim is limited to a one-key
 `isolated_primitive` artifact replay.
 
 ## Contents
@@ -30,7 +30,7 @@ schedules are not included. The claim is limited to a one-key
 - `r3_inert_ideal_probe/`: leakage-model helpers used by the rules
 - `test_r3_adaptive_paths.py`: regression checks that require no data or hardware
 - `section51_reproduce.py`: Section 5.1 snapshot-integrity and numerical checks
-- `section51_full_replay.py`: canonical Section 5.1 runner; a KAT is a separate input
+- `section51_full_replay.py`: canonical Section 5.1 runner using the released experiment KAT
 - `section51_paper_v1/source/`: preserved and path-independent canonical source
 - `docs/section51_reproduction.md`: data layout, verification, and claim scope
 

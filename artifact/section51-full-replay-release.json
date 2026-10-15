@@ -13,9 +13,9 @@
       "contents": "paper containing Section 5.1"
     },
     "section51-full-replay-v1.tar.zst": {
-      "bytes": 489340,
-      "sha256": "6a83bd361fed8cc942400caaf69f905355d859ccffdb265b4ff21f72adf003d7",
-      "contents": "clean run005 candidate commitment, M/CRT outputs, heldout and posthoc audits, regenerated Figure 2, command log, accepted replay result"
+      "bytes": 481913,
+      "sha256": "5a5bdb44974c73e57ba4ff8ded1a3b822a75b754946e58294b4413460dfca2d6",
+      "contents": "clean run005 candidate commitment, M/CRT outputs, heldout and posthoc audits, regenerated Figure 2, accepted replay result, disposable experiment KAT; machine-specific command log excluded"
     },
     "section51-matrix-v1.tar.zst": {
       "bytes": 78904278,
@@ -41,7 +41,7 @@
     "posthoc_kat_sha256": "25a0c3634f0b27c49378564d021fe9c1d3d7d48c9e262d7610b0c6b0cba96b30",
     "figure_pdf_sha256": "eda9787aa248a8b28103e53313b610cee8f75a94b96b9ed985d71286c57e738c",
     "figure_png_sha256": "a52d81e7c14014868710f9aa38422b351d65987432479f6e96b4691892835d01",
-    "commands_sha256": "841cd80e210ef0cb874a1dded284ca5eea0eafe9c00ff645d35dbf02641b7664"
+    "disposable_experiment_kat_sha256": "96c6d3d48331101ef3bb19068d73458a410c9294d0fca27780a48e8b87d85e6b"
   },
   "evidence_contract": {
     "evidence_origin": "measured",
