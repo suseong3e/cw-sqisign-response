@@ -1,7 +1,7 @@
 # SQIsign Round-3 CPA offline analysis core
 
 SQIsign Round-3의 행렬 연산을 대상으로 한 CPA 후보 순위화와 적응형 경로
-선택 코드의 최소 공개본이다. 이 저장소는 원시 파형, KAT, 비밀키, 후보 결과,
+선택 코드의 최소 공개본이다. 이 Git 소스 트리는 원시 파형, KAT, 비밀키, 후보 결과,
 장비 제어 코드 및 출처가 아직 확정되지 않은 벤더 스냅샷을 포함하지 않는다.
 
 ## 범위
@@ -15,8 +15,9 @@ SQIsign Round-3의 행렬 연산을 대상으로 한 CPA 후보 순위화와 적
 못한 경우는 **부분성공**이다. 후보 수, 축소 범위, 검증 결과와 사후 KAT 포함
 여부를 각각 기록해야 한다.
 
-이 공개본 자체는 측정 결과나 키 복구 성공을 주장하지 않는다. 포함된 테스트는
-후보 탐색 예산, 백트래킹, carry 위치 분기와 캐시 동작만 검증한다.
+기본 코드만으로는 측정 결과를 주장하지 않는다. Section 5.1 Release의 검증 번들은
+후보 동결 뒤 저장된 held-out 수치와 Figure의 해시·계약을 확인한다. 원시 파형도
+제공하지만 현재 명령은 전체 공격을 재계산하지 않으며 새 키 일반화를 뜻하지 않는다.
 
 ## 구성
 
@@ -24,6 +25,8 @@ SQIsign Round-3의 행렬 연산을 대상으로 한 CPA 후보 순위화와 적
 - `r3_onekey_m_rules/`: 적응형 M 후보 경로 규칙
 - `r3_inert_ideal_probe/`: 규칙이 사용하는 누설 모델 헬퍼 두 개
 - `test_r3_adaptive_paths.py`: 데이터·하드웨어 비필수 회귀 검사
+- `section51_reproduce.py`: 논문 Section 5.1 스냅샷 무결성·수치 검사
+- `docs/section51_reproduction.md`: 데이터와 재현 범위
 
 ## 실행
 
@@ -37,8 +40,18 @@ python -m py_compile \
   r3_cpa_matrix_rank.py test_r3_adaptive_paths.py \
   r3_onekey_m_rules/*.py r3_inert_ideal_probe/*.py
 python test_r3_adaptive_paths.py
+python test_section51_reproduce.py
 ```
 
-재현에 필요한 측정 데이터와 펌웨어·벤더 소스는 권리와 출처를 별도로 검토한
-후 독립 데이터 패키지로 제공해야 한다. 프로젝트 자체 라이선스는 아직 선택하지
-않았으므로 명시적 라이선스가 추가되기 전에는 재사용 권한을 부여하지 않는다.
+Section 5.1 검증 번들을 받은 뒤에는 다음처럼 실행한다.
+
+```bash
+python section51_reproduce.py --bundle section51-bundle --out section51-report.json
+```
+
+정확한 Release 자산명과 SHA-256은 `artifact/section51-release.json`에 기록한다.
+다운로드 뒤 `sha256sum -c artifact/section51-release.sha256`로 세 자산을 먼저 확인한다.
+
+측정 데이터는 Git 파일 크기 제한 때문에 같은 저장소의 독립 Release 자산으로
+제공한다. 프로젝트 자체 라이선스는 아직 선택하지 않았으므로 명시적 라이선스가
+추가되기 전에는 재사용 권한을 부여하지 않는다.

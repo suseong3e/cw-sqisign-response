@@ -1,0 +1,36 @@
+{
+  "schema": "round3-cpa-section51-release-v1",
+  "repository_visibility": "private",
+  "release_tag": "section51-v1",
+  "assets": {
+    "section51-matrix-v1.tar.zst": {
+      "bytes": 78904278,
+      "trace_shape": [1024, 45056],
+      "trace_dtype": "float32",
+      "public_schedule_rows": 1024,
+      "sha256": "7d77a132bae0a38641cc2637baf80a7835e55cc71e0aeea78fc3d771ae11fe74",
+      "contents": "1024 measured matrix traces, public schedule, source manifest"
+    },
+    "section51-crt-v1.tar.zst": {
+      "bytes": 583456622,
+      "trace_shape": [2112, 163840],
+      "trace_dtype": "float32",
+      "public_schedule_rows": 2112,
+      "sha256": "2e820779e186faa7fe5b235b6f5d17818ce7d38e698571a8ec83cea7b0de76e1",
+      "contents": "2112 measured CRT traces, public schedule, source manifest"
+    },
+    "section51-validation-v1.tar.zst": {
+      "bytes": 172055,
+      "sha256": "ab04b50152bc85a045d7a31f7a3b6ef45b6a3bf3a9bcbd4b6a0a583757b7ac11",
+      "contents": "hash-bound heldout audit, Figure 2 PDF/PNG, renderer"
+    }
+  },
+  "evidence_contract": {
+    "evidence_origin": "measured",
+    "evidence_purpose": "diagnostic",
+    "blinding": "unblinded",
+    "blinding_detail": "precomputed snapshot of candidate-frozen heldout validation",
+    "measurement_scope": "isolated_primitive",
+    "claim_scope": "r3_single_split:one_key_coordinate_candidate"
+  }
+}
