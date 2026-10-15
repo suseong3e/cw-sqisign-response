@@ -12,6 +12,8 @@
 !artifact/
 !artifact/section51-release.json
 !artifact/section51-release.sha256
+!artifact/section51-full-replay-release.json
+!artifact/section51-full-replay-release.sha256
 !r3_cpa_matrix_rank.py
 !test_r3_adaptive_paths.py
 

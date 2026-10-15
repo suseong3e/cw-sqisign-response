@@ -1,0 +1,54 @@
+{
+  "schema": "round3-cpa-section51-full-replay-release-v1",
+  "release_tag": "section51-full-replay-v1",
+  "source_commit": "f09102975cbd70f075b9535061a39a60ddcac3fc",
+  "runner": {
+    "path": "section51_full_replay.py",
+    "sha256": "b77c516e5bced20f40dc9460c4b758d10a85a87b10fb96cce3281fce79b33e89"
+  },
+  "assets": {
+    "Power_Analysis_on_SQIsign.pdf": {
+      "bytes": 1247757,
+      "sha256": "caae547509fff889c03f17273799886279455d3a10ceeb752f40844eab889ebd",
+      "contents": "paper containing Section 5.1"
+    },
+    "section51-full-replay-v1.tar.zst": {
+      "bytes": 489371,
+      "sha256": "490a827fe11ebba3dae0a1c0bfe1c5fe7895de4945eae985f56db4cf2518a5dd",
+      "contents": "run004 candidate commitment, M/CRT outputs, heldout and posthoc audits, regenerated Figure 2, command log, accepted replay result"
+    }
+  },
+  "input_release": {
+    "tag": "section51-v1",
+    "assets": {
+      "section51-matrix-v1.tar.zst": "7d77a132bae0a38641cc2637baf80a7835e55cc71e0aeea78fc3d771ae11fe74",
+      "section51-crt-v1.tar.zst": "2e820779e186faa7fe5b235b6f5d17818ce7d38e698571a8ec83cea7b0de76e1",
+      "section51-experiment-record-v1.tar.gz": "a9bba847c266160282795b5946a9d39bc71f7d5e6b712ed4f0cb6bbf8c067cca"
+    }
+  },
+  "run004": {
+    "status": "accepted_after_validator_only_fix",
+    "candidate_commitment_sha256": "72309c8fb792d83af5b79d5fe9455ea6d514f8ad26a492251de1da5bda3edc6d",
+    "replay_result_sha256": "5eaa21f6e87d81ffd7577aed0fd7dd311b478882cf76417c1a75dcca9383fbba",
+    "heldout_audit_sha256": "11e05f5db7abd88dd75dbf705e67d8d833ce486f7bffd5212fe4b6f4ddb5c164",
+    "posthoc_kat_sha256": "ae1cff43d77767d44379438ea4b9386da0292c910de4ec5f55b2569289653a65",
+    "figure_pdf_sha256": "aa57c51e227e2da0421fecffb47b077d481249b6f22f4bf276c47ca0a7869094",
+    "figure_png_sha256": "a52d81e7c14014868710f9aa38422b351d65987432479f6e96b4691892835d01",
+    "commands_sha256": "fd1c2bda4936ec34c0f042895ce25211a3233dda068bd53ea6285a2eb564c916",
+    "deviation_record": "docs/section51_reproduction.md#run004-편차-기록"
+  },
+  "evidence_contract": {
+    "evidence_origin": "measured",
+    "evidence_purpose": "diagnostic",
+    "blinding": "unblinded",
+    "measurement_scope": "isolated_primitive",
+    "claim_scope": "round3_cpa:section51_full_executable_replay",
+    "claim_not_allowed": [
+      "byte_exact_historical_environment",
+      "unseen_key_success_rate",
+      "full_signer_key_recovery",
+      "scheme_break",
+      "non_linux_x86_64_portability"
+    ]
+  }
+}

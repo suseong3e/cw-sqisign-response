@@ -55,6 +55,8 @@ python section51_reproduce.py --bundle section51-bundle --out section51-report.j
 
 정확한 Release 자산명과 SHA-256은 `artifact/section51-release.json`에 기록한다.
 다운로드 뒤 `sha256sum -c artifact/section51-release.sha256`로 네 자산을 먼저 확인한다.
+논문 PDF와 run004 전체 결과 번들의 소스 커밋·실행기·자산 해시는
+`artifact/section51-full-replay-release.json`에 별도로 결속한다.
 
 `section51-experiment-record-v1.tar.gz`는 Section 5.1의 공개 입력, M/CRT 후보
 동결 경로, 사후 held-out 감사, 그리고 **처분 가능한 trial-0002 KAT·CRT 비공개
