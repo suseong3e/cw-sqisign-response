@@ -1,18 +1,20 @@
-# Section 5.1 재현
+# Section 5.1 reproduction
 
-이 저장소는 두 가지 검증을 제공한다. `section51_reproduce.py`는 기존 결과의
-해시·수치를 빠르게 검사하고, `section51_full_replay.py`는 공개 원시 파형에서
-후보·held-out 통계·사후 KAT·Figure 2를 새 출력 디렉터리에 다시 계산한다.
+This repository provides two verification paths. `section51_reproduce.py`
+checks the hashes and numerical values of the published validation snapshot.
+`section51_full_replay.py` is the canonical analysis runner; its post-hoc KAT
+stage requires a separately supplied KAT that is not part of the public release.
 
-`section51_reproduce.py`는 후보 동결 뒤 저장된 held-out 감사와 Figure 2의
-**비맹검 스냅샷 무결성**을 검증한다. 이는 새 키 일반화, 전체 서명기 재구성 또는 전체 키 복구를 주장하지
-않으며, 측정 범위는 `isolated_primitive`다.
+`section51_reproduce.py` verifies the **unblinded snapshot integrity** of the
+held-out audit and Figure 2 after candidate commitment. It does not establish
+generalization to unseen keys, reconstruct the complete signer, or recover the
+complete secret key. Its measurement scope is `isolated_primitive`.
 
-## 번들 형식
+## Bundle format
 
-번들 디렉터리는 `manifest.json`, 그 원시 바이트 SHA-256만 담은
-`manifest.sha256`, 그리고 manifest가 해시로 열거한 산출물을 가진다. manifest는
-다음 필드를 사용한다.
+The validation bundle contains `manifest.json`, `manifest.sha256` holding the
+SHA-256 of the raw manifest bytes, and the artifacts enumerated by hash in the
+manifest. The manifest uses the following fields:
 
 ```json
 {
@@ -23,44 +25,53 @@
 }
 ```
 
-모든 경로는 번들 내부 상대 경로여야 한다. 모든 JSON/JSONL의 `a1`, `a2`, `m1`,
-`m2`, `expected`, `split_v`, `signature_hex`, `sk` 필드는 거부된다. 따라서 비밀
-스케줄, KAT, 개인키를 이 번들에 넣지 않는다.
+Every path must be relative to the bundle. The verifier rejects the fields
+`a1`, `a2`, `m1`, `m2`, `expected`, `split_v`, `signature_hex`, and `sk` in any
+JSON or JSONL file. Private schedules, KAT data, and secret keys therefore do
+not belong in this bundle.
 
-`audit.report`는 `files`에 SHA-256으로 결속되어야 한다. 검증기는 결속되지 않은
-보고서를 거부한다. 원시 파형에서 후보나 순열 통계를 다시 계산하지 않고 저장된
-감사의 해시·계약·수치만 검증하며, `full_replay` 선언도 명시적으로 거부한다.
+`audit.report` must be bound by SHA-256 in `files`. The verifier rejects an
+unbound report. It validates only the stored audit hashes, contract, and
+numerical values; it does not recompute candidates or permutation statistics
+from raw traces, and it explicitly rejects a `full_replay` declaration.
 
-## 실행
+## Snapshot verification
 
-Release 자산을 받은 디렉터리에서 소스 트리의 체크섬 파일로 먼저 검증한다.
+Verify the downloaded final-release assets against the checksum file committed
+to the source tree:
 
 ```bash
-sha256sum -c /path/to/repo/artifact/section51-release.sha256
+(cd section51-download && \
+  sha256sum -c ../artifact/section51-full-replay-release.sha256)
 ```
 
-네 항목이 모두 `OK`일 때만 검증 번들을 푼다. 내부 `manifest.sha256`은 번들 손상
-검사용이며, 외부 신뢰 기준은 커밋된 이 체크섬 파일이다.
-
+Extract the validation bundle only after all five assets report `OK`. The
+bundle's internal `manifest.sha256` detects corruption; the committed external
+checksum file is the trust anchor.
 
 ```bash
 python3 section51_reproduce.py --bundle path/to/bundle --out path/to/report.json
 ```
 
-통과하려면 이벤트 136개, x/y held-out 각 17개, 순열 99개 및 다음 합계가 절대 오차
-`1e-9` 이내여야 한다: 관측 116.80631243236115, shifted-window
-25.061060481125295, 순열 최대 80.89532561549119. 보고서의 계약은 원본 감사와 같은 `measured` / `diagnostic` / `unblinded` /
-`isolated_primitive` / `r3_single_split:one_key_coordinate_candidate`이며, 검증 범위는
-`precomputed_snapshot_integrity`다.
+A passing report requires 136 events, 17 held-out x events, 17 held-out y
+events, 99 permutations, and the following values within an absolute tolerance
+of `1e-9`: observed sum 116.80631243236115, shifted-window sum
+25.061060481125295, and permutation maximum 80.89532561549119. The report
+contract matches the source audit:
+`measured` / `diagnostic` / `unblinded` / `isolated_primitive` /
+`r3_single_split:one_key_coordinate_candidate`. The verification scope is
+`precomputed_snapshot_integrity`.
 
-검증 번들이 Figure 2 PDF/PNG와 렌더러를 선언하면 세 파일의 manifest 해시를
-검증하고 `verified_precomputed`로 기록한다. 번들이 그림을 선언하지 않으면 새 그림을
-추측해 생성하지 않고 `not_generated`로 기록한다.
+If the bundle declares the Figure 2 PDF, PNG, and renderer, the verifier checks
+all three manifest hashes and reports `verified_precomputed`. If the bundle
+does not declare the figure, the verifier reports `not_generated` instead of
+guessing or generating a replacement.
 
-## 공개 재현 자산 검증
+## Public reproduction assets
 
-Python 3.12와 Linux x86-64 환경이 필요하다. 포함된 challenge oracle이 동적 링크된
-x86-64 ELF이므로 다른 운영체제·아키텍처 재현은 현재 주장하지 않는다.
+Python 3.12 on Linux x86-64 is required. The included challenge oracle is a
+dynamically linked x86-64 ELF binary; portability to other operating systems or
+architectures is outside the current claim.
 
 ```bash
 python3 -m venv .venv
@@ -68,36 +79,45 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 
 gh release download section51-full-replay-v1 \
+  --pattern Power_Analysis_on_SQIsign.pdf \
   --pattern section51-full-replay-v1.tar.zst \
   --pattern section51-matrix-v1.tar.zst \
   --pattern section51-crt-v1.tar.zst \
   --pattern section51-validation-v1.tar.zst \
   --dir section51-download
 
+(cd section51-download && \
+  sha256sum -c ../artifact/section51-full-replay-release.sha256)
+
 mkdir -p section51-data section51-validation section51-run005
 tar --zstd -xf section51-download/section51-matrix-v1.tar.zst -C section51-data
 tar --zstd -xf section51-download/section51-crt-v1.tar.zst -C section51-data
 tar --zstd -xf section51-download/section51-validation-v1.tar.zst -C section51-validation
 tar --zstd -xf section51-download/section51-full-replay-v1.tar.zst -C section51-run005
-(cd section51-download && sha256sum -c ../artifact/section51-full-replay-release.sha256 --ignore-missing)
 ```
 
-`section51-full-replay-v1.tar.zst`에는 clean run005의 명령 기록, 후보 동결, held-out 감사, 결과 JSON과 Figure PDF/PNG가 들어 있다. KAT과 비공개 스케줄은 공개 Release에 포함하지 않는다.
+`section51-full-replay-v1.tar.zst` contains the clean run005 command log,
+candidate commitment, held-out audit, result JSON files, and Figure 2 in PDF and
+PNG formats. KAT data and private schedules are not included in the public
+release.
 
-clean run005는 처음부터 끝까지 종료 코드 0으로 다음 결과를 만들었다.
+Clean run005 completed from start to finish with exit code 0 and produced:
 
-- 이벤트 136개, x/y held-out 각 17개, 순열 99개
-- 관측 합 `116.80631243236115`
-- wrong-window 합 `25.061060481125295`
-- 논문 고정 시드 순열 최대 `80.89532561549119`
-- run005 frozen-file 해시 시드 순열 최대 `87.05374536975015`
-- 사후 KAT의 M/N/x/y/u 전부 exact match
+- 136 events, 17 held-out x events, 17 held-out y events, and 99 permutations
+- observed sum: `116.80631243236115`
+- wrong-window sum: `25.061060481125295`
+- paper fixed-seed permutation maximum: `80.89532561549119`
+- run005 frozen-file-hash-seeded permutation maximum: `87.05374536975015`
+- exact post-hoc KAT matches for M, N, x, y, and u
 
-두 순열 대조 최대가 모두 관측 합보다 낮다. 두 번째 값은 실행시간 등 provenance
-메타데이터가 포함된 frozen-file 해시에 따라 실행마다 달라질 수 있으므로 상수로
-강제하지 않고, 해당 실행의 시드 결속과 관측 합 미만 여부를 검증한다.
+Both permutation-control maxima are below the observed sum. The second control
+is seeded from frozen-file hashes that include provenance metadata such as run
+time, so its exact value may vary between executions. The verifier binds the
+seed for each run and checks that the resulting maximum remains below the
+observed sum instead of enforcing a universal constant.
 
-허용 범위는 공개 원시 파형과 canonical source로 논문 Section 5.1의 한 키
-`isolated_primitive` artifact 계산을 재생성했다는 것이다. 당시 파일 경로까지 같은
-byte-exact 환경, 새 키 성공률, 전체 서명 경로·전체 키 복구, SQIsign scheme break는
-주장하지 않는다.
+The supported claim is that the one-key Section 5.1 `isolated_primitive`
+artifact computation was reproduced from the published measured traces and
+canonical source. Byte-identical reconstruction of historical paths,
+unseen-key success rates, full-signer execution, complete key recovery, and a
+break of SQIsign are outside the claim.
