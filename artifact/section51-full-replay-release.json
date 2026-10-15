@@ -1,10 +1,10 @@
 {
   "schema": "round3-cpa-section51-full-replay-release-v1",
   "release_tag": "section51-full-replay-v1",
-  "source_commit": "f09102975cbd70f075b9535061a39a60ddcac3fc",
+  "source_commit": "417d8c1c6980787cd367899b7ae07eb4b27455e3",
   "runner": {
     "path": "section51_full_replay.py",
-    "sha256": "b77c516e5bced20f40dc9460c4b758d10a85a87b10fb96cce3281fce79b33e89"
+    "sha256": "9ca87ccc029a122e2b7e421ff2a849d5ae8fbdf6de8f79c8e8c4ed577d32388a"
   },
   "assets": {
     "Power_Analysis_on_SQIsign.pdf": {
