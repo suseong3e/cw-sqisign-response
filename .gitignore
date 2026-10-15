@@ -1,0 +1,36 @@
+*
+
+# Minimal, reviewable offline-analysis release.
+!.gitignore
+!README.md
+!requirements.txt
+!r3_cpa_matrix_rank.py
+!test_r3_adaptive_paths.py
+
+!r3_onekey_m_rules/
+!r3_onekey_m_rules/t05-m-product-groups.py
+!r3_onekey_m_rules/t06-m-add-anchors.py
+!r3_onekey_m_rules/t07-m00-groups.py
+!r3_onekey_m_rules/t08-m10-groups.py
+!r3_onekey_m_rules/t09-m-candidates.py
+
+!r3_inert_ideal_probe/
+!r3_inert_ideal_probe/challenge_matrix_cpa.py
+!r3_inert_ideal_probe/challenge_matrix_cpa192.py
+
+# Defense in depth: never publish generated evidence or key-like material.
+**/.env
+**/*.key
+**/*.pem
+**/*.rsp
+**/*.npy
+**/*.npz
+**/*.jsonl
+**/*.log
+**/*.bak
+**/*.bak_*
+**/__pycache__/
+**/runs/
+**/.plans/
+**/vendor/
+**/graphify-out/
