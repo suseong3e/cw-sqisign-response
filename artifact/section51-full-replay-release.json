@@ -13,29 +13,40 @@
       "contents": "paper containing Section 5.1"
     },
     "section51-full-replay-v1.tar.zst": {
-      "bytes": 489371,
-      "sha256": "490a827fe11ebba3dae0a1c0bfe1c5fe7895de4945eae985f56db4cf2518a5dd",
-      "contents": "run004 candidate commitment, M/CRT outputs, heldout and posthoc audits, regenerated Figure 2, command log, accepted replay result"
+      "bytes": 489340,
+      "sha256": "6a83bd361fed8cc942400caaf69f905355d859ccffdb265b4ff21f72adf003d7",
+      "contents": "clean run005 candidate commitment, M/CRT outputs, heldout and posthoc audits, regenerated Figure 2, command log, accepted replay result"
+    },
+    "section51-matrix-v1.tar.zst": {
+      "bytes": 78904278,
+      "sha256": "7d77a132bae0a38641cc2637baf80a7835e55cc71e0aeea78fc3d771ae11fe74",
+      "contents": "1024 measured matrix traces, public schedule, source manifest"
+    },
+    "section51-crt-v1.tar.zst": {
+      "bytes": 583456622,
+      "sha256": "2e820779e186faa7fe5b235b6f5d17818ce7d38e698571a8ec83cea7b0de76e1",
+      "contents": "2112 measured CRT traces, public schedule, source manifest"
+    },
+    "section51-validation-v1.tar.zst": {
+      "bytes": 172055,
+      "sha256": "ab04b50152bc85a045d7a31f7a3b6ef45b6a3bf3a9bcbd4b6a0a583757b7ac11",
+      "contents": "hash-bound historical heldout audit and Figure 2"
+    },
+    "section51-experiment-record-v1.tar.gz": {
+      "bytes": 606686,
+      "sha256": "a9bba847c266160282795b5946a9d39bc71f7d5e6b712ed4f0cb6bbf8c067cca",
+      "contents": "historical inputs, frozen results, disposable experiment KAT and private CRT schedule"
     }
   },
-  "input_release": {
-    "tag": "section51-v1",
-    "assets": {
-      "section51-matrix-v1.tar.zst": "7d77a132bae0a38641cc2637baf80a7835e55cc71e0aeea78fc3d771ae11fe74",
-      "section51-crt-v1.tar.zst": "2e820779e186faa7fe5b235b6f5d17818ce7d38e698571a8ec83cea7b0de76e1",
-      "section51-experiment-record-v1.tar.gz": "a9bba847c266160282795b5946a9d39bc71f7d5e6b712ed4f0cb6bbf8c067cca"
-    }
-  },
-  "run004": {
-    "status": "accepted_after_validator_only_fix",
-    "candidate_commitment_sha256": "72309c8fb792d83af5b79d5fe9455ea6d514f8ad26a492251de1da5bda3edc6d",
-    "replay_result_sha256": "5eaa21f6e87d81ffd7577aed0fd7dd311b478882cf76417c1a75dcca9383fbba",
-    "heldout_audit_sha256": "11e05f5db7abd88dd75dbf705e67d8d833ce486f7bffd5212fe4b6f4ddb5c164",
-    "posthoc_kat_sha256": "ae1cff43d77767d44379438ea4b9386da0292c910de4ec5f55b2569289653a65",
-    "figure_pdf_sha256": "aa57c51e227e2da0421fecffb47b077d481249b6f22f4bf276c47ca0a7869094",
+  "run005": {
+    "status": "accepted_uninterrupted_exit_0",
+    "candidate_commitment_sha256": "4ffeb3e284efdb7f603ab6357676b29949017841d3dc69ec6ae1c11001ec9d88",
+    "replay_result_sha256": "9c24636974fc7173013d6543d922bdc0cac894c18c8637fad5e56a83767e20c5",
+    "heldout_audit_sha256": "3ab6e941a829587085c721ea8992617d2ef41faeb9b1f5dea751e2e84f0dd621",
+    "posthoc_kat_sha256": "25a0c3634f0b27c49378564d021fe9c1d3d7d48c9e262d7610b0c6b0cba96b30",
+    "figure_pdf_sha256": "eda9787aa248a8b28103e53313b610cee8f75a94b96b9ed985d71286c57e738c",
     "figure_png_sha256": "a52d81e7c14014868710f9aa38422b351d65987432479f6e96b4691892835d01",
-    "commands_sha256": "fd1c2bda4936ec34c0f042895ce25211a3233dda068bd53ea6285a2eb564c916",
-    "deviation_record": "docs/section51_reproduction.md#run004-편차-기록"
+    "commands_sha256": "841cd80e210ef0cb874a1dded284ca5eea0eafe9c00ff645d35dbf02641b7664"
   },
   "evidence_contract": {
     "evidence_origin": "measured",
