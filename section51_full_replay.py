@@ -23,8 +23,8 @@ REQUIRED_SOURCE_HASHES = {
     "r3_cpa_onekey_high_norm.py": "5a28a428bab0dccab446a83d77d02beb81cd17b4d210a8b5ae7858ca3b7e6846",
     "r3_cpa_onekey_single_split_audit.py": "a6e5e78ec0de101861a5ac6970ee47ea3a546903c970fd2925b1b00143fa1e81",
 }
-T48_SOURCE = "historical/t48-third-low-u-refreeze.py"
-T48_SHA256 = "cc94791905fd6efc7ef36b004391adf9c0f71ad674f98c58a4c384e66b79385a"
+T48_SOURCE = "m_canonical/t48-third-low-u-refreeze.py"
+T48_SHA256 = "dcf30641e8839465ae86686c8a2b4fe2e5b425ed38fd6e4ae0a42142e9c109e6"
 CANONICAL_AUDIT = "canonical/r3_cpa_onekey_single_split_audit.py"
 HISTORICAL_FROZEN_SHA256 = "a31be289a898d7659a09ff2f81de7ab007818b63e7f3538417a02e6bb8cb093e"
 PAPER_V1_PERMUTATION_SEED = int(HISTORICAL_FROZEN_SHA256[:16], 16)

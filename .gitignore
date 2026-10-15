@@ -70,8 +70,6 @@
 !section51_paper_v1/source/m_historical/*.py
 !section51_paper_v1/source/m_canonical/
 !section51_paper_v1/source/m_canonical/*.py
-!section51_paper_v1/source/historical/
-!section51_paper_v1/source/historical/*.py
 !section51_paper_v1/source/r3_inert_ideal_probe/
 !section51_paper_v1/source/r3_inert_ideal_probe/*.py
 !section51_paper_v1/source/.plans/
